@@ -1,0 +1,27 @@
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        curr = ""
+        max_length = 0
+        curr_len = 0
+        for index, char in enumerate(s):
+            if char in curr:
+                if max_length < curr_len:
+                    max_length = curr_len
+                    curr_len = 0
+                s_curr = s[:index]
+                prev_index = s_curr.rfind(char)
+                if prev_index != index-1:
+                    curr = s[prev_index:index]
+                    curr_len = len(curr)
+                else: 
+                    curr = char
+                    curr_len = 1
+            else:
+                curr = curr + char
+                curr_len = curr_len + 1
+        
+        return max(max_length, curr_len)
